@@ -1,0 +1,236 @@
+/*===========================================================================
+ * QtAdvancedDockingSystem - DockManager
+ *===========================================================================*/
+ads--CDockContainerWidget
+{
+        background: rgb(31, 31, 31);
+}
+
+ads--CDockManager
+{
+        padding: 6px;
+}
+
+
+ads--CDockSplitter::handle:horizontal
+{
+    image: none;
+}
+
+ads--CDockSplitter::handle:vertical
+{
+    image: none;
+}
+
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - DockArea
+ *===========================================================================*/
+ads--CDockAreaWidget
+{
+    border-top: none;
+    background: rgb(51, 51, 51);
+}
+
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - DockArea Titlebar
+ *===========================================================================*/
+ads--CDockAreaTitleBar
+{
+        background: rgb(81, 81, 81);
+        border-bottom: 1px solid palette(highlight);
+        min-height: 23px;
+}
+
+
+ads--CDockAreaTitleBar:disabled
+{
+        border-bottom: 1px solid rgb(140, 140, 140);
+}
+
+ads--CDockAreaTitleBar > QToolButton
+{
+        background: rgb(81, 81, 81);
+        padding: 3 2px;
+}
+
+ads--CDockAreaTitleBar > QToolButton:hover
+{
+        background: rgb(91, 91, 91);
+}
+
+ads--CDockAreaTitleBar > QToolButton:pressed
+{
+        border: 1px solid palette(highlight);
+        background: rgba(255, 196, 125, 127);
+}
+
+
+ads--CDockAreaTabBar
+{
+
+}
+
+
+ads--CDockAreaTabBar #tabsContainerWidget
+{
+        background: rgb(81, 81, 81);
+}
+
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - DockArea Titlebar Buttons
+ *===========================================================================*/
+ads--CDockAreaTitleBar #tabsMenuButton::menu-indicator
+{
+    image: none;
+}
+
+ads--CDockAreaTitleBar #tabsMenuButton
+{
+    qproperty-icon: url(:/metro/images/toolbutton_down_arrow.png);
+        qproperty-iconSize: 8px;
+}
+
+ads--CDockAreaTitleBar #closeButton
+{
+    qproperty-icon: url(:/metro/images/dockwidget_close_button.png);
+        qproperty-iconSize: 12px;
+}
+
+ads--CDockAreaTitleBar #undockButton
+{
+    qproperty-icon: url(:/metro/images/dockwidget_float_button.png);
+    qproperty-iconSize: 11px;
+}
+
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - Dock Widget Tab
+ *===========================================================================*/
+ads--CDockWidgetTab
+{
+    padding: 0 0px;
+}
+
+ads--CDockWidgetTab[activeTab="false"]
+{
+        background: rgb(81, 81, 81);
+        border-right: 1px solid rgb(51, 51, 51);
+}
+
+
+ads--CDockWidgetTab[activeTab="true"]
+{
+        background: palette(highlight);
+}
+
+ads--CDockWidgetTab > QLabel
+{
+   ;
+}
+
+
+ads--CDockWidgetTab[activeTab="true"]:disabled
+{
+        background: rgb(140, 140, 140);
+}
+
+ads--CDockWidgetTab[activeTab="true"] #dockWidgetTabLabel
+{
+        color: rgb(51, 51, 51);
+}
+
+#tabCloseButton
+{
+        margin-top: 2px;
+        background: none;
+        border: none;
+        padding: 2px 0px;
+        qproperty-icon: url(:/core/images/dockwidget_tab_close_icon.png);
+        qproperty-iconSize: 11px;
+}
+
+#tabCloseButton:hover
+{
+        border: 1px solid rgba(0, 0, 0, 32);
+        background: rgba(0, 0, 0, 16);
+}
+
+#tabCloseButton:pressed
+{
+        background: rgba(0, 0, 0, 32);
+}
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - Dock Widget
+ *===========================================================================*/
+ads--CDockWidget > QToolBar
+{
+    border-bottom: 1px solid palette(light);
+}
+
+ads--CDockWidget
+{
+        border: 1px solid rgb(81, 81, 81);
+        border-top: none;
+        background: rgb(51, 51, 51);
+}
+
+/**
+ * The border comes from the itemview that is inside of the dock widget so we
+ * we can disable the border
+ */
+ads--CDockWidget[ItemViewContainer="true"]
+{
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+}
+
+
+ads--CDockWidget[ItemViewContainer="true"] QtLabb--CHeaderWidget
+{
+    border-left: 1px solid rgb(81, 81, 81);
+    border-right: 1px solid rgb(81, 81, 81);
+}
+
+
+ads--CDockWidget[ItemViewContainer="true"] QTableView
+{
+        gridline-color: rgb(81, 81, 81);
+        padding-left: -1px;
+        padding-right: -1px;
+        background-color: rgb(46, 46, 46);
+}
+
+
+ads--CDockWidget[ItemViewContainer="true"]  QHeaderView::section:horizontal:first
+{
+     border-left: 1px solid rgb(81, 81, 81);
+}
+
+ads--CDockWidget[ItemViewContainer="true"]  QHeaderView::section:horizontal:last
+{
+     border-right: 1px solid rgb(81, 81, 81);
+}
+
+
+QWidget[dockWidgetContent="true"]
+{
+        border: none;
+}
+
+
+/*===========================================================================
+ * QtAdvancedDockingSystem - Overlay
+ *===========================================================================*/
+ads--CDockOverlayCross
+{
+        qproperty-iconFrameColor: palette(highlight);
+        qproperty-iconBackgroundColor: palette(base);
+        qproperty-iconOverlayColor: palette(highlight);
+        qproperty-iconArrowColor: rgb(180, 180, 180);
+        qproperty-iconShadowColor: rgb(0, 0, 0);
+}

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/gui">
+        <file>stylesheets/Combinear.qss</file>
+        <file>stylesheets/Hookmark.qss</file>
+        <file>stylesheets/MailSy.qss</file>
+    </qresource>
+</RCC>
