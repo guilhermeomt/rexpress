@@ -1,7 +1,9 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
+        animations \
         src \
         dock
 
-centralwidget.depends = src
+src.depends = dock
+src.depends = animations
