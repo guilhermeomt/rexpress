@@ -3,8 +3,9 @@
         <file>stylesheets/Combinear.qss</file>
         <file>stylesheets/Hookmark.qss</file>
         <file>stylesheets/MailSy.qss</file>
+        <file>stylesheets/Integrid.qss</file>
     </qresource>
-    <qresource prefix="/images">
+    <qresource prefix="/">
         <file>images/logo.png</file>
     </qresource>
     <qresource prefix="/settings">

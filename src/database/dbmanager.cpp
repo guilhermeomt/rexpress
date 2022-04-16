@@ -4,9 +4,8 @@
 #include <QSqlError>
 #include <QDebug>
 
-DBManager::DBManager(const QString& driver, QSettings &config, QObject *parent)
-    : QObject(parent)
-    , m_db(nullptr), m_config(config)
+DBManager::DBManager(const QString& driver, QSettings &config)
+    : m_db(nullptr), m_config(config)
 {
     m_db = new QSqlDatabase(QSqlDatabase::addDatabase(driver));
 }
@@ -35,7 +34,7 @@ bool DBManager::open()
         return true;
     }
 
-    m_config.beginGroup(tr("DBConnection"));
+    m_config.beginGroup(QSettings::tr("DBConnection"));
     QString hostname = m_config.value("hostname").toString();
     QString database = m_config.value("database").toString();
     QString username = m_config.value("username").toString();
@@ -60,22 +59,6 @@ void DBManager::close()
     {
         m_db->close();
     }
-}
-
-bool DBManager::queryExec(QSqlQuery &query,const QString& sql)
-{
-    bool b  = false;
-    if(sql.isEmpty()){
-        b = query.exec();
-    }else{
-        b = query.exec(sql);
-    }
-
-    if(!b) {
-        qDebug()  << query.lastQuery() << query.lastError();
-    }
-
-    return b;
 }
 
 QSettings& DBManager::config() const

@@ -1,4 +1,4 @@
-ADS_OUT_ROOT = $${OUT_PWD}/../..
+    ADS_OUT_ROOT = $${OUT_PWD}/../..
 
 QT       += core gui widgets sql
 
@@ -24,7 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     database/dbmanager.cpp \
+    database/repositories/usersrepository.cpp \
     models/user.cpp \
+    views/about.cpp \
     views/login.cpp \
     views/main.cpp \
     views/mainwindow.cpp \
@@ -32,12 +34,16 @@ SOURCES += \
 
 HEADERS += \
     database/dbmanager.h \
+    database/repositories/repository.h \
+    database/repositories/usersrepository.h \
     models/user.h \
+    views/about.h \
     views/login.h \
     views/mainwindow.h \
     views/properties.h
 
 FORMS += \
+    views/about.ui \
     views/login.ui \
     views/mainwindow.ui \
     views/properties.ui

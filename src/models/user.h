@@ -3,11 +3,13 @@
 
 #include <QObject>
 
-class User : public QObject
+
+class User
 {
-    Q_OBJECT
 public:
-    explicit User(QObject *parent = nullptr);
+    explicit User();
+    User(QString id, QString firstname, QString lastname, QString email)
+        : m_id(id), m_firstname(firstname), m_lastname(lastname), m_email(email) {};
     QString getId() const { return m_id; }
     void setId(QString id) { m_id = id; }
     QString getFirstName() const { return m_firstname; }
@@ -15,10 +17,6 @@ public:
     QString getLastName() const { return m_lastname; }
     void setLastName(QString lastname) { m_lastname = lastname; }
     QString getFullName() const { return m_firstname + ' ' + m_lastname; }
-
-
-signals:
-
 
 private:
     QString m_id;

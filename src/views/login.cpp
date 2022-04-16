@@ -16,8 +16,35 @@ Login::~Login()
     delete ui;
 }
 
-void Login::on_btnSignIn_clicked()
+void Login::on_btnLogin_clicked()
 {
-    qDebug() << "clicked!";
+    const char* email = ui->leEmail->text().toStdString().c_str();
+    const char* password = ui->lePassword->text().toStdString().c_str();
+
+    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
+    m_usersRepository = new UsersRepository(settings);
+    auto user = m_usersRepository->getByEmailAndPassword(email, password);
+
+    if(!user) {
+        QMessageBox msgError;
+        msgError.setText("Email e/ou senha incorreto(s).");
+        msgError.setIcon(QMessageBox::Critical);
+        msgError.setWindowTitle("Login inválido!");
+        msgError.exec();
+    } else {
+        this->hide();
+        m_w = new CMainWindow(user);
+        m_w->show();
+    }
+
+    delete user;
+    delete m_usersRepository;
+}
+
+
+void Login::on_btnAbout_clicked()
+{
+    if (!m_about) m_about = new About();
+    if (!m_about->isVisible()) m_about->show();
 }
 

@@ -7,17 +7,15 @@
 
 class QSqlDatabase;
 
-class DBManager : public QObject
+class DBManager
 {
 public:
-    DBManager(const QString& driver, QSettings &config, QObject *parent = 0);
+    DBManager(const QString& driver, QSettings &config);
     ~DBManager();
 
     QSqlDatabase* m_db;
 
     QSettings& config() const;
-
-    bool queryExec(QSqlQuery &query,const QString& sql);
 
     bool isOpen() const;
 

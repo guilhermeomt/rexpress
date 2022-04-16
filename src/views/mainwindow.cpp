@@ -36,15 +36,20 @@
 #include "properties.h"
 
 #include "../animations/src/Animation/Animation.h"
-#include <../animations//src/StackedWidgetAnimation/StackedWidgetAnimation.h>
+#include <../animations/src/StackedWidgetAnimation/StackedWidgetAnimation.h>
 
 
 using namespace ads;
 
-
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::CMainWindow)
+{
+}
+
+CMainWindow::CMainWindow(User* authUser, QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::CMainWindow), m_authUser(authUser)
 {
     ui->setupUi(this);
     CDockManager::setConfigFlag(CDockManager::OpaqueSplitterResize, true);
@@ -55,7 +60,7 @@ CMainWindow::CMainWindow(QWidget *parent)
     QWidget w;
 
     QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    DBManager = new class DBManager("QMYSQL", settings, this);
+    DBManager = new class DBManager("QMYSQL", settings);
 
     DBManager->open();
 
@@ -119,7 +124,7 @@ CMainWindow::CMainWindow(QWidget *parent)
     menuToolbar->setFrameShape(QFrame::StyledPanel);
     QToolButton* menuToolbarBackButton = new QToolButton(menuToolbar);
     menuToolbarBackButton->setIcon(QIcon(":/icons/svg/bookmark.svg"));
-    QLabel* menuToolbarTitle = new QLabel("<b>Logado como Guilherme", menuToolbar);
+    QLabel* menuToolbarTitle = new QLabel("<b>Logado como " + m_authUser->getFirstName(), menuToolbar);
     menuToolbarTitle->setStyleSheet(tr("color: #a1a1a1"));
     QHBoxLayout* menuToolbarLayout = new QHBoxLayout(menuToolbar);
     menuToolbarLayout->setContentsMargins(QMargins());
@@ -141,12 +146,12 @@ CMainWindow::CMainWindow(QWidget *parent)
     menuLayout->addWidget(menuButtonProject);
     menuLayout->addWidget(menuButtonExit);
     menuLayout->addStretch();
-    menu->hide();
     CDockWidget* MenuDockWidget = new CDockWidget("Menu");
     MenuDockWidget->setWidget(menu);
     auto* MenuDockWidgetArea = DockManager->addDockWidget(DockWidgetArea::LeftDockWidgetArea , MenuDockWidget);
     MenuDockWidgetArea->setMaximumWidth(0);
     MenuDockWidgetArea->setFixedHeight(900);
+    menu->hide();
 
     QObject::connect(mainToolbarMenuButton, &QToolButton::clicked, [=] {
         WAF::Animation::sideSlideIn(menu, WAF::LeftSide);

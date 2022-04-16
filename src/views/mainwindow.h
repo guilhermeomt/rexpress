@@ -10,6 +10,7 @@
 #include "DockAreaWidget.h"
 #include "DockWidget.h"
 
+#include "models/user.h"
 #include "database/dbmanager.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ class CMainWindow : public QMainWindow
 
 public:
     CMainWindow(QWidget *parent = nullptr);
+    CMainWindow(User* authUser, QWidget *parent = nullptr);
     ~CMainWindow();
 
 protected:
@@ -41,6 +43,8 @@ private:
     ads::CDockWidget* TimelineDockWidget;
 
     void createPerspectiveUi();
+
+    User* m_authUser;
 
 private slots:
 	void savePerspective();

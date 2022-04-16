@@ -2,6 +2,11 @@
 #define LOGIN_H
 
 #include <QWidget>
+#include <QMessageBox>
+
+#include "mainwindow.h"
+#include "about.h"
+#include "database/repositories/usersrepository.h"
 
 namespace Ui {
 class Login;
@@ -16,10 +21,15 @@ public:
     ~Login();
 
 private slots:
-    void on_btnSignIn_clicked();
+    void on_btnLogin_clicked();
+
+    void on_btnAbout_clicked();
 
 private:
+    CMainWindow* m_w;
+    About* m_about = nullptr;
     Ui::Login *ui;
+    UsersRepository* m_usersRepository = nullptr;
 };
 
 #endif // LOGIN_H
