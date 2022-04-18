@@ -30,7 +30,8 @@ SOURCES += \
     views/login.cpp \
     views/main.cpp \
     views/mainwindow.cpp \
-    views/properties.cpp
+    views/properties.cpp \
+    views/registration.cpp
 
 HEADERS += \
     database/dbmanager.h \
@@ -40,13 +41,15 @@ HEADERS += \
     views/about.h \
     views/login.h \
     views/mainwindow.h \
-    views/properties.h
+    views/properties.h \
+    views/registration.h
 
 FORMS += \
     views/about.ui \
     views/login.ui \
     views/mainwindow.ui \
-    views/properties.ui
+    views/properties.ui \
+    views/registration.ui
 
 LIBS += -L$${ADS_OUT_ROOT}/lib
 

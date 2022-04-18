@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 #include "about.h"
 #include "database/repositories/usersrepository.h"
+#include "registration.h"
 
 namespace Ui {
 class Login;
@@ -25,9 +26,12 @@ private slots:
 
     void on_btnAbout_clicked();
 
+    void on_btnRegister_clicked();
+
 private:
-    CMainWindow* m_w;
+    CMainWindow* m_w = nullptr;
     About* m_about = nullptr;
+    Registration* m_registration = nullptr;
     Ui::Login *ui;
     UsersRepository* m_usersRepository = nullptr;
 };

@@ -34,8 +34,26 @@ User* UsersRepository::getByEmailAndPassword(const char* email,const char* passw
     query.bindValue(":password", password);
     query.exec();
 
-    auto err = query.lastError();
-    qDebug() << err;
+     if(query.first()) {
+         QString id = query.value(0).toString();
+         QString email = query.value(1).toString();
+         QString firstname = query.value(2).toString();
+         QString lastname = query.value(3).toString();
+
+         User* user = new User(id, firstname, lastname, email);
+         return user;
+     } else {
+         return nullptr;
+     }
+}
+
+User* UsersRepository::getByEmail(const char* email) {
+
+    QSqlQuery query;
+    query.prepare("SELECT id, email, first_name, last_name FROM users "
+                  "WHERE email LIKE :email");
+    query.bindValue(":email", email);
+    query.exec();
 
      if(query.first()) {
          QString id = query.value(0).toString();
@@ -51,7 +69,21 @@ User* UsersRepository::getByEmailAndPassword(const char* email,const char* passw
 }
 
 User* UsersRepository::create(User entity) {
-   return nullptr;
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO users(first_name, last_name, email, password)"
+                  " VALUES (:firstname, :lastname, :email, :password)");
+    query.bindValue(":firstname", entity.getFirstName());
+    query.bindValue(":lastname", entity.getLastName());
+    query.bindValue(":email", entity.getEmail());
+    query.bindValue(":password", entity.getPassword());
+    auto ok = query.exec();
+
+    if(ok) {
+        return new User(entity);
+    } else {
+        return nullptr;
+    }
 }
 
 User* UsersRepository::update(User entity) {

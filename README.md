@@ -6,7 +6,8 @@
 
 ## Funcionalidades
 - Sistema de Autenticação e Autorização
-  - [ ] Login
+  - [x] Login
+  - [x] Registrar conta
   - [ ] Logout
   - [ ] Ver detalhes da conta
   - [ ] Alterar senha
@@ -34,7 +35,7 @@
 - Sistema de Visualização
   - [ ] Abrir projeto
   - [ ] Fechar projeto
-  - [ ] Menu Sobre
+  - [x] Menu Sobre
   - [ ] Ver propriedades do requisito
 
 - Sistema de Configurações

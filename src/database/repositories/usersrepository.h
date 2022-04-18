@@ -19,6 +19,7 @@ public:
     std::list<User> getAll() override;
     User* getById(int id) override;
     User* getByEmailAndPassword(const char* email,const char* password);
+    User* getByEmail(const char* email);
     User* create(User entity) override;
     User* update(User entity) override;
     User* remove(int id) override;
