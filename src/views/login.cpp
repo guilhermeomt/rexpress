@@ -18,8 +18,8 @@ Login::~Login()
 
 void Login::on_btnLogin_clicked()
 {
-    const char* email = ui->leEmail->text().toStdString().c_str();
-    const char* password = ui->lePassword->text().toStdString().c_str();
+    QString email = ui->leEmail->text();
+    QString password = QString("%1").arg(QString(QCryptographicHash::hash(ui->lePassword->text().toUtf8(),QCryptographicHash::Md5).toHex()));
 
     QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
     m_usersRepository = new UsersRepository(settings);
@@ -51,7 +51,7 @@ void Login::on_btnAbout_clicked()
 
 void Login::on_btnRegister_clicked()
 {
-    if (!m_registration) m_registration = new Registration();
+    if (!m_registration) m_registration = new Registration(this);
     if (!m_registration->isVisible()) m_registration->show();
 }
 

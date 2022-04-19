@@ -25,8 +25,7 @@ User* UsersRepository::getById(int id) {
     return nullptr;
 }
 
-User* UsersRepository::getByEmailAndPassword(const char* email,const char* password) {
-
+User* UsersRepository::getByEmailAndPassword(QString email, QString password) {
     QSqlQuery query;
     query.prepare("SELECT id, email, first_name, last_name FROM users "
                   "WHERE email LIKE :email AND password LIKE :password");
@@ -47,7 +46,7 @@ User* UsersRepository::getByEmailAndPassword(const char* email,const char* passw
      }
 }
 
-User* UsersRepository::getByEmail(const char* email) {
+User* UsersRepository::getByEmail(QString email) {
 
     QSqlQuery query;
     query.prepare("SELECT id, email, first_name, last_name FROM users "

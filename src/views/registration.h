@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QSettings>
+#include <QCryptographicHash>
 #include <string.h>
 
 #include "database/repositories/usersrepository.h"

@@ -36,17 +36,15 @@ private:
 
     Ui::CMainWindow *ui;
 
+    void main();
+
     DBManager* DBManager = nullptr;
 
     ads::CDockManager* DockManager;
     ads::CDockAreaWidget* StatusDockArea;
     ads::CDockWidget* TimelineDockWidget;
 
-    void createPerspectiveUi();
-
     User* m_authUser;
 
-private slots:
-	void savePerspective();
 };
 #endif // MAINWINDOW_H

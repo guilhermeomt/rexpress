@@ -18,23 +18,23 @@ Registration::~Registration()
 
 void Registration::on_btnBox_accepted()
 {
-    const char* firstName = ui->leFirstName->text().toStdString().c_str();
-    const char* lastName = ui->leLastName->text().toStdString().c_str();
-    const char* email = ui->leEmail->text().toStdString().c_str();
-    const char* password = ui->lePassword->text().toStdString().c_str();
-    const char* confirmPassword = ui->leConfirmPassword->text().toStdString().c_str();
+    QString firstName = ui->leFirstName->text();;
+    QString lastName = ui->leLastName->text();
+    QString email = ui->leEmail->text();
+    QString password = ui->lePassword->text();
+    QString confirmPassword = ui->leConfirmPassword->text();
 
     QMessageBox msgError;
     msgError.setIcon(QMessageBox::Critical);
     msgError.setWindowTitle("Erro!");
-    if((strlen(firstName) == 0) || (strlen(lastName) == 0) || (strlen(email) == 0)
-            || (strlen(password) == 0) || (strlen(confirmPassword) == 0)) {
+    if((firstName.length() == 0 || lastName.length() == 0) || email.length() == 0
+            || password.length() == 0 || confirmPassword.length() == 0) {
         msgError.setText("Preencha todos os campos, por favor.");
         msgError.exec();
         return;
     }
 
-    if(strcmp(password, confirmPassword)) {
+    if(password != confirmPassword) {
         msgError.setText("Senha não corresponde. Tente novamente.");
         msgError.exec();
         return;
@@ -51,16 +51,27 @@ void Registration::on_btnBox_accepted()
         return;
     }
 
-    User user(firstName, lastName, email, password);
+    QByteArray baPassword = password.toLocal8Bit();
+    QString hashedPassword = QString("%1").arg(QString(QCryptographicHash::hash(baPassword,QCryptographicHash::Md5).toHex()));
+
+    User user("id", firstName, lastName, email, hashedPassword);
     auto userRow = m_usersRepository->create(user);
 
-    qDebug()  << userRow;
     if(userRow) {
         QMessageBox msgSuccess;
         msgSuccess.setText("Sua conta criada com sucesso!");
         msgSuccess.setIcon(QMessageBox::Information);
         msgSuccess.setWindowTitle("Bem vindo " + user.getFirstName() + "!");
-        msgSuccess.exec();
+        int ret = msgSuccess.exec();
+
+        switch(ret) {
+        case QMessageBox::Ok:
+            this->close();
+            break;
+        default:
+            break;
+        }
+
     } else {
         msgError.setText("Ocorreu algum erro inesperado. Tente novamente mais tarde.");
         msgError.exec();
@@ -71,7 +82,7 @@ void Registration::on_btnBox_accepted()
 void Registration::on_btnBox_clicked(QAbstractButton *button)
 {
     if(button == ui->btnBox->button(QDialogButtonBox::Cancel)) {
-      this->close();
+        this->close();
     }
 }
 

@@ -10,8 +10,8 @@ public:
     explicit User();
     User(QString id, QString firstname, QString lastname, QString email)
         : m_id(id), m_firstname(firstname), m_lastname(lastname), m_email(email) {};
-    User(const char* firstname, const char* lastname, const char* email, const char* password)
-        : m_firstname(firstname), m_lastname(lastname), m_email(email), m_password(password) {};
+    User(QString id, QString firstname, QString lastname, QString email, QString password)
+        : m_id(id), m_firstname(firstname), m_lastname(lastname), m_email(email), m_password(password) {};
     QString getId() const { return m_id; }
     void setId(QString id) { m_id = id; }
     QString getFirstName() const { return m_firstname; }
