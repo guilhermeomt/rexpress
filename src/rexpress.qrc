@@ -341,5 +341,8 @@
         <file>svg/wi-fi_logo.svg</file>
         <file>svg/wikipedia.svg</file>
         <file>svg/workflow.svg</file>
+        <file>svg/account.svg</file>
+        <file>svg/add_folder.svg</file>
+        <file>svg/logout.svg</file>
     </qresource>
 </RCC>

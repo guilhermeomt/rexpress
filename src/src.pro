@@ -24,23 +24,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     database/dbmanager.cpp \
+    database/repositories/projectsrepository.cpp \
     database/repositories/usersrepository.cpp \
+    models/project.cpp \
     models/user.cpp \
     views/about.cpp \
     views/login.cpp \
     views/main.cpp \
     views/mainwindow.cpp \
+    views/openproject.cpp \
     views/properties.cpp \
     views/registration.cpp
 
 HEADERS += \
     database/dbmanager.h \
+    database/repositories/projectsrepository.h \
     database/repositories/repository.h \
     database/repositories/usersrepository.h \
+    models/project.h \
     models/user.h \
     views/about.h \
     views/login.h \
     views/mainwindow.h \
+    views/openproject.h \
     views/properties.h \
     views/registration.h
 
@@ -48,6 +54,7 @@ FORMS += \
     views/about.ui \
     views/login.ui \
     views/mainwindow.ui \
+    views/openproject.ui \
     views/properties.ui \
     views/registration.ui
 

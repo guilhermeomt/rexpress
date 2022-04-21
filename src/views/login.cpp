@@ -9,6 +9,12 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(tr("Rexpress"));
+    ui->lblLogo->setFixedSize(QSize(231, 140));
+    ui->lblLogo->setScaledContents(true);
+    ui->lblLogo->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    QPixmap logo(":/images/logo.png");
+    ui->lblLogo->setPixmap(logo.scaled(ui->lblLogo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->lblLogo->setAlignment(Qt::AlignCenter);
 }
 
 Login::~Login()
@@ -37,7 +43,6 @@ void Login::on_btnLogin_clicked()
         m_w->show();
     }
 
-    delete user;
     delete m_usersRepository;
 }
 

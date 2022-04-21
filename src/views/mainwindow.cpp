@@ -5,7 +5,6 @@
 #include "ui_form.h"
 
 #include <QWidgetAction>
-#include <QLabel>
 #include <QTreeView>
 #include <QTimer>
 #include <QTabWidget>
@@ -20,7 +19,6 @@
 #include <QToolButton>
 #include <QHeaderView>
 
-#include "DockAreaWidget.h"
 #include "DockAreaTitleBar.h"
 #include "DockAreaTabBar.h"
 #include "FloatingDockContainer.h"
@@ -48,6 +46,11 @@ CMainWindow::CMainWindow(User* authUser, QWidget *parent)
   this->main();
 }
 
+CMainWindow::~CMainWindow()
+{
+    delete ui;
+}
+
 void CMainWindow::main() {
     ui->setupUi(this);
     CDockManager::setConfigFlag(CDockManager::OpaqueSplitterResize, true);
@@ -64,25 +67,20 @@ void CMainWindow::main() {
     labels << "ID" << "Especificação " << "Tipo "<< "Prioridade" << "Status";
     treeWidget->setHeaderLabels(labels);
     treeWidget->header()->resizeSection(1, 250);
-    QTreeWidgetItem * item = new QTreeWidgetItem();
-    item->setText(0, tr("REQ01"));
-    item->setText(1, tr("O sistema deve ter login"));
-    item->setText(2, tr("Funcional"));
-    item->setText(3, tr("Alta"));
-    item->setText(4, tr("Em progresso"));
-    treeWidget->addTopLevelItem(item);
     CDockWidget* TableDockWidget = new CDockWidget("Requisitos");
     TableDockWidget->setIcon(QIcon(":/icons/svg/file.svg"));
     TableDockWidget->setWidget(treeWidget);
     auto* TableDockWidgetArea = DockManager->addDockWidget(DockWidgetArea::LeftDockWidgetArea, TableDockWidget);
+    m_TableDockWidgetArea = TableDockWidgetArea;
     ui->menuView->addAction(TableDockWidget->toggleViewAction());
     TableDockWidgetArea->setDisabled(true);
 
     Form* propertiesWidget = new Form();
     CDockWidget* PropertiesDockWidget = new CDockWidget("Propriedades");
-    PropertiesDockWidget->setIcon(QIcon(":/icons/svg/services.svg"));
+    PropertiesDockWidget->setIcon(QIcon(":/icons/svg/view_details.svg"));
     PropertiesDockWidget->setWidget(propertiesWidget);
     auto* PropertiesDockWidgetArea = DockManager->addDockWidget(DockWidgetArea::RightDockWidgetArea, PropertiesDockWidget);
+    m_PropertiesDockWidgetArea = PropertiesDockWidgetArea;
     ui->menuView->addAction(PropertiesDockWidget->toggleViewAction());
     propertiesWidget->hide();
     PropertiesDockWidgetArea->setDisabled(true);
@@ -92,66 +90,171 @@ void CMainWindow::main() {
     mainToolbar->setFrameShape(QFrame::StyledPanel);
     QToolButton* mainToolbarMenuButton = new QToolButton(mainToolbar);
     mainToolbarMenuButton->setIcon(QIcon(":/icons/svg/menu.svg"));
-    QLabel* mainToolbarTitle = new QLabel("<b>Projeto Gemini</b>", mainToolbar);
+    QLabel* mainToolbarTitle = new QLabel(mainToolbar);
+    m_mainToolbarTitle = mainToolbarTitle;
     QHBoxLayout* mainToolbarLayout = new QHBoxLayout(mainToolbar);
     mainToolbarLayout->setContentsMargins(QMargins());
     mainToolbarLayout->setSpacing(10);
     mainToolbarLayout->addWidget(mainToolbarMenuButton);
     mainToolbarLayout->addWidget(mainToolbarTitle);
-    CDockWidget* CentralDockWidget = new CDockWidget("Cabeçalho");
-    CentralDockWidget->setWidget(mainToolbar);
-    auto* CentralDockArea = DockManager->addDockWidget(DockWidgetArea::OuterDockAreas, CentralDockWidget);
-    CentralDockArea->setDockAreaFlag(CDockAreaWidget::eDockAreaFlag::HideSingleWidgetTitleBar, true);
-    CentralDockArea->setMaximumHeight(50);
+    CDockWidget* HeaderDockWidget = new CDockWidget("Cabeçalho");
+    HeaderDockWidget->setWidget(mainToolbar);
+    auto* HeaderDockArea = DockManager->addDockWidget(DockWidgetArea::OuterDockAreas, HeaderDockWidget);
+    HeaderDockArea->setDockAreaFlag(CDockAreaWidget::eDockAreaFlag::HideSingleWidgetTitleBar, true);
+    HeaderDockArea->setMaximumHeight(50);
 
     QFrame* menu = new QFrame(this);
+    m_menu = menu;
     menu->setProperty("menu", true);
     menu->setFixedWidth(300);
     QFrame* menuToolbar = new QFrame(menu);
     menuToolbar->setStyleSheet(tr("border: 1px solid transparent;"));
     menuToolbar->setFrameShape(QFrame::StyledPanel);
-    QLabel* menuToolbarBackButton = new QLabel(menuToolbar);
-    menuToolbarBackButton->setPixmap(QPixmap(":/icons/svg/next.svg"));
+    QLabel* menuToolbarLoggedIn = new QLabel(menuToolbar);
+    menuToolbarLoggedIn->setFixedWidth(40);
+    menuToolbarLoggedIn->setFixedHeight(40);
+    menuToolbarLoggedIn->setScaledContents(true);
+    menuToolbarLoggedIn->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    QPixmap userIcon(":/icons/svg/account.svg");
+    menuToolbarLoggedIn->setPixmap(userIcon.scaled(menuToolbarLoggedIn->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel* menuToolbarTitle = new QLabel("<b>Logado como " + m_authUser->getFirstName(), menuToolbar);
     menuToolbarTitle->setStyleSheet(tr("color: #a1a1a1;"));
     QHBoxLayout* menuToolbarLayout = new QHBoxLayout(menuToolbar);
-    menuToolbarLayout->setContentsMargins(QMargins());
-    menuToolbarLayout->setSpacing(10);
-    menuToolbarLayout->addWidget(menuToolbarBackButton);
+    menuToolbarLayout->setContentsMargins(2,2,2,10);
+    menuToolbarLayout->setSpacing(15);
+    menuToolbarLayout->addWidget(menuToolbarLoggedIn);
     menuToolbarLayout->addWidget(menuToolbarTitle);
-    QPushButton* menuButtonLogout = new QPushButton("Logout", menu);
-    menuButtonLogout->setIcon(QIcon(":/icons/svg/up_left.svg"));
+    QPushButton* menuButtonLogout = new QPushButton(QIcon(":/icons/svg/logout.svg"), "Logout", menu);
     menuButtonLogout->setProperty("menu", true);
-    QVariantMap options;
-    options.insert("color", QColor(Qt::yellow));
-    options.insert("color-off", QColor(Qt::yellow));
-    QPushButton* menuButtonProject = new QPushButton("Abrir projeto", menu);
-    menuButtonProject->setProperty("menu", true);
-    QPushButton* menuButtonExit = new QPushButton("Sair", menu);
+    QPushButton* menuButtonNewProject = new QPushButton(QIcon(":/icons/svg/add_folder.svg"), "Novo projeto", menu);
+    QPushButton* menuButtonOpenProject = new QPushButton(QIcon(":/icons/svg/opened_folder.svg"), "Abrir projeto", menu);
+    menuButtonOpenProject->setProperty("menu", true);
+    QPushButton* menuButtonExit = new QPushButton(QIcon(":/icons/svg/up_left.svg"), "Sair", menu);
     menuButtonExit->setProperty("menu", true);
     QVBoxLayout* menuLayout = new QVBoxLayout(menu);
     menuLayout->setSpacing(3);
     menuLayout->addWidget(menuToolbar);
+    menuLayout->addWidget(menuButtonNewProject);
+    menuLayout->addWidget(menuButtonOpenProject);
     menuLayout->addWidget(menuButtonLogout);
-    menuLayout->addWidget(menuButtonProject);
     menuLayout->addWidget(menuButtonExit);
     menuLayout->addStretch();
+
+    connect(menuButtonLogout, &QPushButton::clicked, [=] {
+          Login* login = new Login();
+          login->show();
+          this->close();
+      });
 
     connect(mainToolbarMenuButton, &QToolButton::clicked, [=] {
         WAF::Animation::sideSlideIn(menu, WAF::LeftSide);
     });
 
-    connect(menuButtonLogout, &QPushButton::clicked, [=] {
-        Login* login = new Login();
-        login->show();
-        this->close();
+    connect(menuButtonNewProject, &QPushButton::clicked, [this] {
+        createProject();
+    });
+
+    connect(mainToolbarMenuButton, &QToolButton::clicked, [=] {
+        WAF::Animation::sideSlideIn(menu, WAF::LeftSide);
+    });
+
+    connect(menuButtonOpenProject, &QPushButton::clicked, [this] { chooseProject(); } );
+}
+
+void CMainWindow::createProject() {
+    QFrame* newProjectMenu = new QFrame(this);
+    newProjectMenu->setProperty("menu", true);
+    QFrame* newProjectMenuHeader = new QFrame(newProjectMenu);
+    newProjectMenuHeader->setStyleSheet("background-color: rgb(68,68,68);");
+    QLabel* menuHeaderTitle = new QLabel("Criar novo projeto", newProjectMenuHeader);
+    menuHeaderTitle->setAlignment(Qt::AlignHCenter);
+    menuHeaderTitle->setStyleSheet(tr("font-size: 28px;"));
+    QHBoxLayout* menuHeaderLayout = new QHBoxLayout(newProjectMenuHeader);
+    menuHeaderLayout->setContentsMargins(2,14,2,14);
+    menuHeaderLayout->setSpacing(5);
+    menuHeaderLayout->addWidget(menuHeaderTitle);
+    QFrame* newProjectForm = new QFrame(newProjectMenu);
+    QLineEdit* leName = new QLineEdit(newProjectForm);
+    leName->setPlaceholderText(tr("Nome do projeto "));
+    leName->setFixedWidth(350);
+    QTextEdit* qeDescription = new QTextEdit(newProjectForm);
+    qeDescription->setPlaceholderText("Descrição");
+    qeDescription->setFixedWidth(350);
+    qeDescription->setFixedHeight(100);
+    QLabel* lblAuthor = new QLabel(newProjectForm);
+    lblAuthor->setText(tr("<b>Autor: </b>") + m_authUser->getFullName());
+    QDialogButtonBox* btnBox = new QDialogButtonBox(newProjectForm);
+    btnBox->addButton("Confirmar", QDialogButtonBox::AcceptRole);
+    btnBox->addButton("Cancelar", QDialogButtonBox::RejectRole);
+    btnBox->setFixedWidth(350);
+    QVBoxLayout* newProjectFormLayout = new QVBoxLayout(newProjectForm);
+    newProjectFormLayout->setAlignment(Qt::AlignHCenter);
+    newProjectFormLayout->addWidget(leName);
+    newProjectFormLayout->addWidget(qeDescription);
+    newProjectFormLayout->addWidget(lblAuthor);
+    newProjectFormLayout->addWidget(btnBox);
+    QVBoxLayout* newProjectMenuLayout = new QVBoxLayout(newProjectMenu);
+    newProjectMenuLayout->setContentsMargins(0,0,0,10);
+    newProjectMenuLayout->setSpacing(0);
+    newProjectMenuLayout->addWidget(newProjectMenuHeader);
+    newProjectMenuLayout->addWidget(newProjectForm);
+    newProjectMenuLayout->addStretch();
+
+    WAF::Animation::sideSlideIn(newProjectMenu, WAF::TopSide);
+
+    connect(btnBox, &QDialogButtonBox::accepted, [=] {
+        QString name = leName->text();
+        QString description = qeDescription->toPlainText();
+
+        QMessageBox msgError;
+        msgError.setIcon(QMessageBox::Critical);
+        msgError.setWindowTitle("Erro!");
+        if(name.length() == 0 || description.length() == 0) {
+            msgError.setText("Preencha todos os campos, por favor.");
+            msgError.exec();
+            return;
+        }
+
+        QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
+        m_ProjectsRepository = new ProjectsRepository(settings);
+
+        Project project(name, description, m_authUser->getId());
+        auto* projectRow = m_ProjectsRepository->create(project);
+
+        if(projectRow) {
+            m_openedProject = projectRow;
+            WAF::Animation::sideSlideOut(newProjectMenu, WAF::TopSide);
+            WAF::Animation::sideSlideOut(m_menu, WAF::LeftSide);
+            this->openProject();
+        } else {
+            msgError.setText("Ocorreu algum erro inesperado. Tente novamente mais tarde.");
+            msgError.exec();
+        }
+    });
+
+    connect(btnBox, &QDialogButtonBox::rejected, [=] {
+        WAF::Animation::sideSlideOut(newProjectMenu, WAF::TopSide);
     });
 }
 
-CMainWindow::~CMainWindow()
-{
-    delete ui;
+void CMainWindow::chooseProject() {
+    if (!m_openProject) m_openProject = new OpenProject(m_authUser, this);
+    if (!m_openProject->isVisible()) m_openProject->show();
+
+    connect(m_openProject, &OpenProject::accept, [this](Project* project) {
+        WAF::Animation::sideSlideOut(m_menu, WAF::LeftSide);
+        m_openedProject = project;
+        this->openProject();
+    });
+}
+
+void CMainWindow::openProject() {
+    m_mainToolbarTitle->setText("<b>" + m_openedProject->getName() + "</b>");
+    m_TableDockWidgetArea->setDisabled(false);
+    m_PropertiesDockWidgetArea->setDisabled(false);
+    this->setWindowTitle("[" + m_openedProject->getName() + "]" + " - Rexpress");
+
 }
 
 //============================================================================

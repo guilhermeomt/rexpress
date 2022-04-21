@@ -245,6 +245,12 @@ QLineEdit
 
 }
 
+/*-----QTextEdit-----*/
+QTextEdit {
+        background-color: #131313;
+        color : #eee;
+        border: 1px solid #343434;
+}
 
 /*-----QPlainTExtEdit-----*/
 QPlainTextEdit

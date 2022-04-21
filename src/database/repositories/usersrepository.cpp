@@ -67,6 +67,9 @@ User* UsersRepository::getByEmail(QString email) {
      }
 }
 
+
+
+
 User* UsersRepository::create(User entity) {
     QSqlQuery query;
 
