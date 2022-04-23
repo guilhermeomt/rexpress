@@ -344,5 +344,6 @@
         <file>svg/account.svg</file>
         <file>svg/add_folder.svg</file>
         <file>svg/logout.svg</file>
+        <file>svg/user_folder.svg</file>
     </qresource>
 </RCC>

@@ -9,20 +9,20 @@
 #include "repository.h"
 #include "models/user.h"
 
-class UsersRepository final : public Repository<User, int>
+class UsersRepository final : public Repository<User, QString>
 {
 public:
-    UsersRepository() : Repository<User, int>() {};
+    UsersRepository() : Repository<User, QString>() {};
     UsersRepository(QSettings &config);
     ~UsersRepository() { delete m_dbmanager; };
 
     std::list<User> getAll() override;
-    User* getById(int id) override;
+    User* getById(QString id) override;
     User* getByEmailAndPassword(QString email, QString password);
     User* getByEmail(QString email);
     User* create(User entity) override;
     User* update(User entity) override;
-    User* remove(int id) override;
+    User* remove(QString id) override;
 };
 
 #endif // USERSREPOSITORY_H

@@ -34,8 +34,8 @@ CMainWindow::CMainWindow( QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::CMainWindow)
 {
-  m_authUser = new User();
-  this->main();
+    m_authUser = new User();
+    this->main();
 }
 
 CMainWindow::CMainWindow(User* authUser, QWidget *parent)
@@ -43,7 +43,7 @@ CMainWindow::CMainWindow(User* authUser, QWidget *parent)
       ui(new Ui::CMainWindow),
       m_authUser(authUser)
 {
-  this->main();
+    this->main();
 }
 
 CMainWindow::~CMainWindow()
@@ -61,6 +61,8 @@ void CMainWindow::main() {
     this->showMaximized();
 
     QWidget w;
+
+    getPendingInvites();
 
     QTreeWidget* treeWidget = new QTreeWidget();
     QStringList labels;
@@ -130,6 +132,17 @@ void CMainWindow::main() {
     QPushButton* menuButtonNewProject = new QPushButton(QIcon(":/icons/svg/add_folder.svg"), "Novo projeto", menu);
     QPushButton* menuButtonOpenProject = new QPushButton(QIcon(":/icons/svg/opened_folder.svg"), "Abrir projeto", menu);
     menuButtonOpenProject->setProperty("menu", true);
+    QPushButton* menuButtonInviteUser = new QPushButton(QIcon(":/icons/svg/user_folder.svg"), "Convidar usuário ao projeto", menu);
+    m_menuButtonInviteUser = menuButtonInviteUser;
+    menuButtonInviteUser->setProperty("menu", true);
+    menuButtonInviteUser->setDisabled(true);
+    QPushButton* menuButtonInvites = new QPushButton(QIcon(":/icons/svg/invite.svg"), "Convites", menu);
+    m_menuButtonInvites = menuButtonInvites;
+    menuButtonInvites->setProperty("menu", true);
+    if(!m_pendingInvitations->empty()) {
+        auto length = std::to_string(m_pendingInvitations->length());
+        menuButtonInvites->setText(tr("Convites ") + tr("(") + tr(length.c_str())  + tr(")"));
+    }
     QPushButton* menuButtonExit = new QPushButton(QIcon(":/icons/svg/up_left.svg"), "Sair", menu);
     menuButtonExit->setProperty("menu", true);
     QVBoxLayout* menuLayout = new QVBoxLayout(menu);
@@ -137,15 +150,17 @@ void CMainWindow::main() {
     menuLayout->addWidget(menuToolbar);
     menuLayout->addWidget(menuButtonNewProject);
     menuLayout->addWidget(menuButtonOpenProject);
+    menuLayout->addWidget(menuButtonInviteUser);
+    menuLayout->addWidget(menuButtonInvites);
     menuLayout->addWidget(menuButtonLogout);
     menuLayout->addWidget(menuButtonExit);
     menuLayout->addStretch();
 
     connect(menuButtonLogout, &QPushButton::clicked, [=] {
-          Login* login = new Login();
-          login->show();
-          this->close();
-      });
+        Login* login = new Login();
+        login->show();
+        this->close();
+    });
 
     connect(mainToolbarMenuButton, &QToolButton::clicked, [=] {
         WAF::Animation::sideSlideIn(menu, WAF::LeftSide);
@@ -155,11 +170,54 @@ void CMainWindow::main() {
         createProject();
     });
 
+    connect(menuButtonInviteUser, &QPushButton::clicked, [this] {
+        InviteUser* inviteUser = new InviteUser(m_authUser, m_openedProject, this);
+        inviteUser->show();
+    });
+
+
+    connect(menuButtonInvites, &QPushButton::clicked, [this] {
+        Invites* m_invites = new Invites(m_authUser, m_pendingInvitations, this);
+        WAF::Animation::sideSlideIn(m_invites, WAF::TopSide);
+
+        connect(m_invites, &Invites::accept, [&, this](int removedInvitationIndex) {
+            m_pendingInvitations->removeAt(removedInvitationIndex);
+            if(!m_pendingInvitations->empty()) {
+                auto length = std::to_string(m_pendingInvitations->length());
+                m_menuButtonInvites->setText(tr("Convites ") + tr("(") + tr(length.c_str())  + tr(")"));
+            } else {
+                m_menuButtonInvites->setText(tr("Convites"));
+            }
+        });
+
+
+        connect(m_invites, &Invites::reject, [&, this](int removedInvitationIndex) {
+            m_pendingInvitations->removeAt(removedInvitationIndex);
+            if(!m_pendingInvitations->empty()) {
+                auto length = std::to_string(m_pendingInvitations->length());
+                m_menuButtonInvites->setText(tr("Convites ") + tr("(") + tr(length.c_str())  + tr(")"));
+            } else {
+                m_menuButtonInvites->setText(tr("Convites"));
+            }
+        });
+    });
+
     connect(mainToolbarMenuButton, &QToolButton::clicked, [=] {
         WAF::Animation::sideSlideIn(menu, WAF::LeftSide);
     });
 
     connect(menuButtonOpenProject, &QPushButton::clicked, [this] { chooseProject(); } );
+}
+
+void CMainWindow::getPendingInvites() {
+    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
+    m_invitationsRepository = new InvitationsRepository(settings);
+
+    m_pendingInvitations = m_invitationsRepository->getByInviteeId(m_authUser->getId());
+
+    if(!m_pendingInvitations) {
+        m_pendingInvitations = new QVector<Invitation*>();
+    }
 }
 
 void CMainWindow::createProject() {
@@ -217,10 +275,10 @@ void CMainWindow::createProject() {
         }
 
         QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-        m_ProjectsRepository = new ProjectsRepository(settings);
+        m_projectsRepository = new ProjectsRepository(settings);
 
         Project project(name, description, m_authUser->getId());
-        auto* projectRow = m_ProjectsRepository->create(project);
+        auto* projectRow = m_projectsRepository->create(project);
 
         if(projectRow) {
             m_openedProject = projectRow;
@@ -254,7 +312,7 @@ void CMainWindow::openProject() {
     m_TableDockWidgetArea->setDisabled(false);
     m_PropertiesDockWidgetArea->setDisabled(false);
     this->setWindowTitle("[" + m_openedProject->getName() + "]" + " - Rexpress");
-
+    m_menuButtonInviteUser->setDisabled(false);
 }
 
 //============================================================================

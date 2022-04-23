@@ -1,6 +1,6 @@
 #include "usersrepository.h"
 
-UsersRepository::UsersRepository(QSettings &config) : Repository<User,int>(config) {
+UsersRepository::UsersRepository(QSettings &config) : Repository<User,QString>(config) {
     m_dbmanager->open();
 };
 
@@ -21,7 +21,22 @@ std::list<User> UsersRepository::getAll() {
     return list;
 }
 
-User* UsersRepository::getById(int id) {
+User* UsersRepository::getById(QString id) {
+    QSqlQuery query;
+
+    query.prepare("SELECT id, email, first_name, last_name FROM users WHERE id = :id");
+    query.bindValue(":id", id);
+    query.exec();
+
+    if(query.next())
+    {
+        QString id = query.value(0).toString();
+        QString email = query.value(1).toString();
+        QString firstname = query.value(2).toString();
+        QString lastname = query.value(3).toString();
+
+        return new User(id, firstname, lastname, email);
+    }
     return nullptr;
 }
 
@@ -67,9 +82,6 @@ User* UsersRepository::getByEmail(QString email) {
      }
 }
 
-
-
-
 User* UsersRepository::create(User entity) {
     QSqlQuery query;
 
@@ -92,6 +104,6 @@ User* UsersRepository::update(User entity) {
    return nullptr;
 }
 
-User* UsersRepository::remove(int id) {
+User* UsersRepository::remove(QString id) {
    return nullptr;
 }

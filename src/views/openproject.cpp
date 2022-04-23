@@ -14,7 +14,11 @@ OpenProject::OpenProject(User *authUser, QWidget *parent) :
     QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
     m_projectsRepository = new ProjectsRepository(settings);
 
-    auto vec = m_projectsRepository->getByOwnerId(m_authUser->getId());
+    auto vec = m_projectsRepository->getByUserId(m_authUser->getId());
+
+    if(!vec) {
+        return;
+    }
 
     for(Project *project : *vec) {
         ui->list->addItem(project->getName());

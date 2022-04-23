@@ -14,6 +14,8 @@
 #include "DockWidget.h"
 
 #include "openproject.h"
+#include "invites.h"
+#include "inviteuser.h"
 #include "models/user.h"
 #include "database/dbmanager.h"
 #include "database/repositories/projectsrepository.h"
@@ -38,6 +40,7 @@ private:
     Ui::CMainWindow *ui;
 
     void main();
+    void getPendingInvites();
     void createProject();
     void chooseProject();
     void openProject();
@@ -48,16 +51,22 @@ private:
     QLabel* m_mainToolbarTitle = nullptr;
     QFrame* m_menu = nullptr;
 
+    QPushButton* m_menuButtonInviteUser;
+    QPushButton * m_menuButtonInvites = nullptr;
+
     ads::CDockAreaWidget* m_TableDockWidgetArea = nullptr;
     ads::CDockAreaWidget* m_PropertiesDockWidgetArea = nullptr;
 
-
     OpenProject* m_openProject = nullptr;
+    Invites* m_invites = nullptr;
 
     User* m_authUser;
     Project* m_openedProject = nullptr;
 
-    ProjectsRepository* m_ProjectsRepository = nullptr;
+    QVector<Invitation*>* m_pendingInvitations = nullptr;
+
+    ProjectsRepository* m_projectsRepository = nullptr;
+    InvitationsRepository* m_invitationsRepository = nullptr;
 
 };
 #endif // MAINWINDOW_H

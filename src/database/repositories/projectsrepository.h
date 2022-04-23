@@ -9,19 +9,20 @@
 #include "repository.h"
 #include "models/project.h"
 
-class ProjectsRepository final :  public Repository<Project, int>
+class ProjectsRepository final :  public Repository<Project, QString>
 {
 public:
     ProjectsRepository(QSettings &config);
     ~ProjectsRepository() { delete m_dbmanager; };
 
     std::list<Project> getAll() override;
-    Project* getById(int id) override;
-    QVector<Project*>* getByOwnerId(QString ownerId);
+    Project* getById(QString id) override;
+    QVector<Project*>* getByUserId(QString userId);
     Project* getByName(QString name);
     Project* create(Project entity) override;
+    bool addUserToProject(QString projectId, QString userId);
     Project* update(Project entity) override;
-    Project* remove(int id) override;
+    Project* remove(QString id) override;
 };
 
 #endif // PROJECTSREPOSITORY_H

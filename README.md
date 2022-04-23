@@ -1,14 +1,16 @@
-# Rexpress
+<p align="center">
+<img src="src/images/logo.png">
+</p>
 
 ## Sobre
 
-
+Em breve...
 
 ## Funcionalidades
 - Sistema de Autenticação e Autorização
   - [x] Login
   - [x] Registrar conta
-  - [ ] Logout
+  - [x] Logout
   - [ ] Ver detalhes da conta
   - [ ] Alterar senha
   - [ ] Alterar endereço de email
@@ -17,10 +19,11 @@
 
 - Sistema de Gerenciamento
   - Projetos
-    - [ ] Criar projeto
+    - [x] Criar projeto
     - [ ] Editar projeto
     - [ ] Remover projeto
-    - [ ] Adicionar usuário ao projeto
+    - [x] Convidar usuário ao projeto
+    - [x] Aceitar/Recusar convite de projeto
     - [ ] Remover usuário do projeto
   - Requisitos
     - [ ] Adicionar requisito
@@ -33,7 +36,7 @@
     - [ ] Adicionar cargo à usuário
 
 - Sistema de Visualização
-  - [ ] Abrir projeto
+  - [x] Abrir projeto
   - [ ] Fechar projeto
   - [x] Menu Sobre
   - [ ] Ver propriedades do requisito
@@ -43,3 +46,5 @@
   - [ ] Aumentar/diminuir tamanho da fonte
 
 ## Como executar
+
+Em breve...

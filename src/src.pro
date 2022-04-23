@@ -24,11 +24,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     database/dbmanager.cpp \
+    database/repositories/invitationsrepository.cpp \
     database/repositories/projectsrepository.cpp \
     database/repositories/usersrepository.cpp \
+    models/invitation.cpp \
     models/project.cpp \
     models/user.cpp \
     views/about.cpp \
+    views/invites.cpp \
+    views/inviteuser.cpp \
     views/login.cpp \
     views/main.cpp \
     views/mainwindow.cpp \
@@ -38,12 +42,16 @@ SOURCES += \
 
 HEADERS += \
     database/dbmanager.h \
+    database/repositories/invitationsrepository.h \
     database/repositories/projectsrepository.h \
     database/repositories/repository.h \
     database/repositories/usersrepository.h \
+    models/invitation.h \
     models/project.h \
     models/user.h \
     views/about.h \
+    views/invites.h \
+    views/inviteuser.h \
     views/login.h \
     views/mainwindow.h \
     views/openproject.h \
@@ -52,6 +60,8 @@ HEADERS += \
 
 FORMS += \
     views/about.ui \
+    views/invites.ui \
+    views/inviteuser.ui \
     views/login.ui \
     views/mainwindow.ui \
     views/openproject.ui \
