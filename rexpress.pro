@@ -1,9 +1,12 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
-        animations \
-        src \
-        dock
+          app \
+          dock \
+          animations \
 
-src.depends = dock
-src.depends = animations
+dock.subdir = src/dock
+animations.subdir  = src/animations
+app.subdir  = src/app
+
+app.depends = dock animations

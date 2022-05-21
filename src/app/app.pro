@@ -1,6 +1,7 @@
-    ADS_OUT_ROOT = $${OUT_PWD}/../..
+ADS_OUT_ROOT = $${OUT_PWD}/../
+ANIMATIONS_OUT_ROOT = $${OUT_PWD}/../
 
-QT       += core gui widgets sql
+QT += core gui widgets sql
 
 TARGET = CentralWidgetExample
 DESTDIR = $${ADS_OUT_ROOT}/lib
@@ -68,9 +69,12 @@ FORMS += \
     views/properties.ui \
     views/registration.ui
 
-LIBS += -L$${ADS_OUT_ROOT}/lib
+LIBS += -L$${ADS_OUT_ROOT}/lib \
+        -L$${ANIMATIONS_OUT_ROOT}/lib \
 
-include(../rexpress.pri)
+
+
+include(../../rexpress.pri)
 INCLUDEPATH += ../dock \
                ../animations
 
@@ -83,5 +87,3 @@ DISTFILES += \
 
 RESOURCES += \
     rexpress.qrc
-
-

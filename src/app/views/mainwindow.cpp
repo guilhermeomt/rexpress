@@ -1,3 +1,4 @@
+
 #include "views/login.h"
 #include "mainwindow.h"
 
@@ -25,8 +26,8 @@
 #include "DockComponentsFactory.h"
 #include "properties.h"
 
-#include "../animations/src/Animation/Animation.h"
-#include "../animations/src/StackedWidgetAnimation/StackedWidgetAnimation.h"
+#include "src/Animation/Animation.h"
+#include "src/StackedWidgetAnimation/StackedWidgetAnimation.h"
 
 using namespace ads;
 

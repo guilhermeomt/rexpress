@@ -1,4 +1,5 @@
-ADS_OUT_ROOT = $${OUT_PWD}/..
+ADS_OUT_ROOT = $${OUT_PWD}/../
+
 CONFIG += c++14
 CONFIG += debug_and_release
 TARGET = $$qtLibraryTarget(qtadvanceddocking)
@@ -8,21 +9,21 @@ DESTDIR = $${ADS_OUT_ROOT}/lib
 QT += core gui widgets
 
 !adsBuildStatic {
-	CONFIG += shared
+        CONFIG += shared
     DEFINES += ADS_SHARED_EXPORT
 }
 adsBuildStatic {
-	CONFIG += staticlib
+        CONFIG += staticlib
     DEFINES += ADS_STATIC
 }
 
 windows {
-	# MinGW
-	*-g++* {
-		QMAKE_CXXFLAGS += -Wall -Wextra -pedantic
-	}
-	# MSVC
-	*-msvc* {
+        # MinGW
+        *-g++* {
+                QMAKE_CXXFLAGS += -Wall -Wextra -pedantic
+        }
+        # MSVC
+        *-msvc* {
                 QMAKE_CXXFLAGS += /utf-8
         }
 }
@@ -36,7 +37,7 @@ HEADERS += \
     DockContainerWidget.h \
     DockManager.h \
     DockWidget.h \
-    DockWidgetTab.h \ 
+    DockWidgetTab.h \
     DockingStateReader.h \
     FloatingDockContainer.h \
     FloatingDragPreview.h \
@@ -78,8 +79,8 @@ QT += gui-private
 }
 
 isEmpty(PREFIX){
-	PREFIX=../installed
-	warning("Install Prefix not set")
+        PREFIX=../installed
+        warning("Install Prefix not set")
 }
 headers.path=$$PREFIX/include
 headers.files=$$HEADERS

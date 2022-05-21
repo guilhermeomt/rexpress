@@ -1,4 +1,5 @@
-ANIMATIONS_OUT_ROOT = $${OUT_PWD}/../../
+ANIMATIONS_OUT_ROOT = $${OUT_PWD}/../
+
 CONFIG += c++14
 CONFIG += debug_and_release
 TARGET = $$qtLibraryTarget(animations)
