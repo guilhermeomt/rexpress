@@ -40,9 +40,6 @@ void Registration::on_btnBox_accepted()
         return;
     }
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_usersRepository = new UsersRepository(settings);
-
     auto userWithSameEmail = m_usersRepository->getByEmail(email);
 
     if(userWithSameEmail) {

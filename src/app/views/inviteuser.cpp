@@ -39,9 +39,6 @@ void InviteUser::on_btnBox_accepted()
         return;
     }
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_usersRepository = new UsersRepository(settings);
-
     auto* user = m_usersRepository->getByEmail(email);
 
     if(!user) {
@@ -50,11 +47,8 @@ void InviteUser::on_btnBox_accepted()
         return;
     }
 
-    m_invitationsRepository = new InvitationsRepository(settings);
-
     Invitation* alreadyInvited = m_invitationsRepository->getByIds(m_authUser->getId(),
                                                                    user->getId(), m_openedProject->getId());
-
     if(alreadyInvited) {
         msgError.setText("Você já convidou esse usuário para este projeto.");
         msgError.exec();

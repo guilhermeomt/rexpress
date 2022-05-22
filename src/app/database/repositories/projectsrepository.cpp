@@ -1,7 +1,7 @@
 ﻿#include "projectsrepository.h"
 
 
-ProjectsRepository::ProjectsRepository(QSettings &config) : Repository<Project, QString>(config) {
+ProjectsRepository::ProjectsRepository(DBManager* dbmanager, QObject* parent) : QObject(parent), IRepository<Project, QString>(dbmanager) {
     m_dbmanager->open();
 };
 

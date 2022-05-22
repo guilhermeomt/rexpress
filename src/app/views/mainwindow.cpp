@@ -1,4 +1,3 @@
-
 #include "views/login.h"
 #include "mainwindow.h"
 
@@ -60,6 +59,7 @@ void CMainWindow::main() {
     DockManager = new CDockManager(this);
     setWindowTitle(tr("Rexpress"));
     this->showMaximized();
+
 
     QWidget w;
 
@@ -211,9 +211,6 @@ void CMainWindow::main() {
 }
 
 void CMainWindow::getPendingInvites() {
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_invitationsRepository = new InvitationsRepository(settings);
-
     m_pendingInvitations = m_invitationsRepository->getByInviteeId(m_authUser->getId());
 
     if(!m_pendingInvitations) {
@@ -274,9 +271,6 @@ void CMainWindow::createProject() {
             msgError.exec();
             return;
         }
-
-        QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-        m_projectsRepository = new ProjectsRepository(settings);
 
         Project project(name, description, m_authUser->getId());
         auto* projectRow = m_projectsRepository->create(project);

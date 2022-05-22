@@ -29,6 +29,7 @@ private slots:
 
     void on_btnBox_accepted();
 
+    IOC_INJECTABLE(ProjectsRepository, m_projectsRepository);
 private:
     Ui::OpenProject *ui;
 

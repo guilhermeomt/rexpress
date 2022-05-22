@@ -1,4 +1,4 @@
-#ifndef DBMANAGER_H
+    #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
 #include <QObject>
@@ -7,15 +7,17 @@
 
 class QSqlDatabase;
 
-class DBManager
+class DBManager : public QObject
 {
+    Q_OBJECT
 public:
-    DBManager(const QString& driver, QSettings &config);
+    DBManager();
+    DBManager(const QString& driver, QSettings* config, QObject* parent = nullptr);
     ~DBManager();
 
     QSqlDatabase* m_db;
 
-    QSettings& config() const;
+    QSettings* config() const;
 
     bool isOpen() const;
 
@@ -25,7 +27,7 @@ public:
 
 
 private:
-    QSettings& m_config;
+    QSettings* m_config;
 };
 
 #endif // DBMANAGER_H

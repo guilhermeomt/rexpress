@@ -6,14 +6,15 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
-#include "repository.h"
+#include "irepository.h"
 #include "models/project.h"
 
-class ProjectsRepository final :  public Repository<Project, QString>
+class ProjectsRepository final : public QObject, public IRepository<Project, QString>
 {
+    Q_OBJECT
 public:
-    ProjectsRepository(QSettings &config);
-    ~ProjectsRepository() { delete m_dbmanager; };
+    ProjectsRepository(DBManager* dbmanager, QObject* parent = nullptr);
+    ~ProjectsRepository() {};
 
     std::list<Project> getAll() override;
     Project* getById(QString id) override;

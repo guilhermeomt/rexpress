@@ -6,15 +6,15 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
-#include "repository.h"
+#include "irepository.h"
 #include "models/user.h"
 
-class UsersRepository final : public Repository<User, QString>
+class UsersRepository final : public QObject, public IRepository<User, QString>
 {
+    Q_OBJECT
 public:
-    UsersRepository() : Repository<User, QString>() {};
-    UsersRepository(QSettings &config);
-    ~UsersRepository() { delete m_dbmanager; };
+    UsersRepository(DBManager* dbmanager, QObject* parent = nullptr);
+    ~UsersRepository() override { delete m_dbmanager; }
 
     std::list<User> getAll() override;
     User* getById(QString id) override;

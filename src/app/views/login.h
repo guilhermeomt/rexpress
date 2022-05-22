@@ -16,7 +16,6 @@ class Login;
 class Login : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
@@ -28,6 +27,7 @@ private slots:
 
     void on_btnRegister_clicked();
 
+    IOC_INJECTABLE(UsersRepository, m_usersRepository);
 private:
     CMainWindow* m_w = nullptr;
     About* m_about = nullptr;

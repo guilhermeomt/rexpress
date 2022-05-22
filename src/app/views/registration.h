@@ -27,6 +27,7 @@ private slots:
 
     void on_btnBox_clicked(QAbstractButton *button);
 
+    IOC_INJECTABLE(UsersRepository, m_usersRepository);
 private:
     Ui::Registration *ui;
 

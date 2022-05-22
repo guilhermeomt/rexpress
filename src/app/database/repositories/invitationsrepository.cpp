@@ -1,7 +1,8 @@
 #include "invitationsrepository.h"
-    #include "qsqlerror.h"
+#include "qsqlerror.h"
 
-InvitationsRepository::InvitationsRepository(QSettings &config) : Repository<Invitation,int>(config) {
+InvitationsRepository::InvitationsRepository(DBManager* dbmanager, QObject* parent ) : QObject(parent), IRepository<Invitation,int>(dbmanager)
+{
     m_dbmanager->open();
 };
 

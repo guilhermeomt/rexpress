@@ -27,8 +27,6 @@ void Login::on_btnLogin_clicked()
     QString email = ui->leEmail->text();
     QString password = QString("%1").arg(QString(QCryptographicHash::hash(ui->lePassword->text().toUtf8(),QCryptographicHash::Md5).toHex()));
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_usersRepository = new UsersRepository(settings);
     auto user = m_usersRepository->getByEmailAndPassword(email, password);
 
     if(!user) {

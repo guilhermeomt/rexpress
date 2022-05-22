@@ -3,9 +3,15 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QDebug>
+#include <iostream>
 
-DBManager::DBManager(const QString& driver, QSettings &config)
-    : m_db(nullptr), m_config(config)
+DBManager::DBManager() {
+    m_config = new QSettings(":/settings/settings.ini", QSettings::IniFormat);
+    m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QMYSQL"));
+}
+
+DBManager::DBManager(const QString& driver, QSettings* config, QObject* parent)
+    : QObject(parent), m_db(nullptr), m_config(config)
 {
     m_db = new QSqlDatabase(QSqlDatabase::addDatabase(driver));
 }
@@ -34,12 +40,12 @@ bool DBManager::open()
         return true;
     }
 
-    m_config.beginGroup(QSettings::tr("DBConnection"));
-    QString hostname = m_config.value("hostname").toString();
-    QString database = m_config.value("database").toString();
-    QString username = m_config.value("username").toString();
-    QString password = m_config.value("password").toString();
-    m_config.endGroup();
+    m_config->beginGroup(QSettings::tr("DBConnection"));
+    QString hostname = m_config->value("hostname").toString();
+    QString database = m_config->value("database").toString();
+    QString username = m_config->value("username").toString();
+    QString password = m_config->value("password").toString();
+    m_config->endGroup();
 
     m_db->setHostName(hostname);
     m_db->setDatabaseName(database);
@@ -61,7 +67,7 @@ void DBManager::close()
     }
 }
 
-QSettings& DBManager::config() const
+QSettings* DBManager::config() const
 {
     return m_config;
 }

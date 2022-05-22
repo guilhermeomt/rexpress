@@ -36,6 +36,10 @@ public:
 protected:
 	virtual void closeEvent(QCloseEvent* event) override;
 
+private slots:
+    IOC_INJECTABLE(ProjectsRepository, m_projectsRepository);
+    IOC_INJECTABLE(InvitationsRepository, m_invitationsRepository);
+
 private:
     Ui::CMainWindow *ui;
 
@@ -67,6 +71,5 @@ private:
 
     ProjectsRepository* m_projectsRepository = nullptr;
     InvitationsRepository* m_invitationsRepository = nullptr;
-
 };
 #endif // MAINWINDOW_H

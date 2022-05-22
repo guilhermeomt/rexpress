@@ -17,6 +17,10 @@ animationsBuildStatic {
    DEFINES += ANIMATIONS_STATIC
 }
 
+diBuildStatic {
+    DEFINES += DI_STATIC
+}
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -28,6 +32,7 @@ SOURCES += \
     database/repositories/invitationsrepository.cpp \
     database/repositories/projectsrepository.cpp \
     database/repositories/usersrepository.cpp \
+    main.cpp \
     models/invitation.cpp \
     models/project.cpp \
     models/user.cpp \
@@ -35,7 +40,6 @@ SOURCES += \
     views/invites.cpp \
     views/inviteuser.cpp \
     views/login.cpp \
-    views/main.cpp \
     views/mainwindow.cpp \
     views/openproject.cpp \
     views/properties.cpp \
@@ -44,8 +48,8 @@ SOURCES += \
 HEADERS += \
     database/dbmanager.h \
     database/repositories/invitationsrepository.h \
+    database/repositories/irepository.h \
     database/repositories/projectsrepository.h \
-    database/repositories/repository.h \
     database/repositories/usersrepository.h \
     models/invitation.h \
     models/project.h \
@@ -75,6 +79,7 @@ LIBS += -L$${ADS_OUT_ROOT}/lib \
 
 
 include(../../rexpress.pri)
+include(../dependency_injection/dependency_injection.pri)
 INCLUDEPATH += ../dock \
                ../animations
 

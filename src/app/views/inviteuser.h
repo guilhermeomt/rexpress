@@ -26,6 +26,8 @@ private slots:
 
     void on_btnBox_rejected();
 
+    IOC_INJECTABLE(UsersRepository, m_usersRepository);
+    IOC_INJECTABLE(InvitationsRepository, m_invitationsRepository);
 private:
     Ui::InviteUser *ui;
     Project* m_openedProject = nullptr;

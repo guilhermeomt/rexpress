@@ -1,6 +1,7 @@
 #include "usersrepository.h"
 
-UsersRepository::UsersRepository(QSettings &config) : Repository<User,QString>(config) {
+UsersRepository::UsersRepository(DBManager* dbmanager, QObject* parent) : QObject(parent), IRepository<User,QString>(dbmanager)
+{
     m_dbmanager->open();
 };
 
@@ -48,17 +49,17 @@ User* UsersRepository::getByEmailAndPassword(QString email, QString password) {
     query.bindValue(":password", password);
     query.exec();
 
-     if(query.first()) {
-         QString id = query.value(0).toString();
-         QString email = query.value(1).toString();
-         QString firstname = query.value(2).toString();
-         QString lastname = query.value(3).toString();
+    if(query.first()) {
+        QString id = query.value(0).toString();
+        QString email = query.value(1).toString();
+        QString firstname = query.value(2).toString();
+        QString lastname = query.value(3).toString();
 
-         User* user = new User(id, firstname, lastname, email);
-         return user;
-     } else {
-         return nullptr;
-     }
+        User* user = new User(id, firstname, lastname, email);
+        return user;
+    } else {
+        return nullptr;
+    }
 }
 
 User* UsersRepository::getByEmail(QString email) {
@@ -69,17 +70,17 @@ User* UsersRepository::getByEmail(QString email) {
     query.bindValue(":email", email);
     query.exec();
 
-     if(query.first()) {
-         QString id = query.value(0).toString();
-         QString email = query.value(1).toString();
-         QString firstname = query.value(2).toString();
-         QString lastname = query.value(3).toString();
+    if(query.first()) {
+        QString id = query.value(0).toString();
+        QString email = query.value(1).toString();
+        QString firstname = query.value(2).toString();
+        QString lastname = query.value(3).toString();
 
-         User* user = new User(id, firstname, lastname, email);
-         return user;
-     } else {
-         return nullptr;
-     }
+        User* user = new User(id, firstname, lastname, email);
+        return user;
+    } else {
+        return nullptr;
+    }
 }
 
 User* UsersRepository::create(User entity) {
@@ -101,9 +102,9 @@ User* UsersRepository::create(User entity) {
 }
 
 User* UsersRepository::update(User entity) {
-   return nullptr;
+    return nullptr;
 }
 
 User* UsersRepository::remove(QString id) {
-   return nullptr;
+    return nullptr;
 }

@@ -2,21 +2,21 @@
 CONFIG(debug, debug|release){
     win32 {
     	versionAtLeast(QT_VERSION, 5.15.0) {
-                LIBS += -lqtadvanceddocking -lanimations
+                LIBS += -lqtadvanceddocking -lanimations -ldi
     	}
     	else {
-                LIBS += -lqtadvanceddockingd -lanimations
+                LIBS += -lqtadvanceddockingd -lanimations -ldi
     	}
     }
     else:mac {
-        LIBS += -lqtadvanceddocking_debug -lanimations
+        LIBS += -lqtadvanceddocking_debug -lanimations -ldi
     }
     else {
-        LIBS += -lqtadvanceddocking -lanimations
+        LIBS += -lqtadvanceddocking -lanimations -ldi
     }
 }
 else{
-    LIBS += -lqtadvanceddocking -lanimations
+    LIBS += -lqtadvanceddocking -lanimations -ldi
 }
 
 

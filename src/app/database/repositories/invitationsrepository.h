@@ -1,15 +1,14 @@
 #ifndef INVITATIONSREPOSITORY_H
 #define INVITATIONSREPOSITORY_H
 
-#include "repository.h"
+#include "irepository.h"
 #include "models/invitation.h"
 
-class InvitationsRepository : public Repository<Invitation, int>
+class InvitationsRepository final : public QObject, public IRepository<Invitation, int>
 {
 public:
-    InvitationsRepository();
-    InvitationsRepository(QSettings &config);
-    ~InvitationsRepository() { delete m_dbmanager; };
+    InvitationsRepository(DBManager* dbmanager, QObject* parent = nullptr);
+    ~InvitationsRepository() {};
 
     std::list<Invitation> getAll() override;
     Invitation* getById(int id) override;

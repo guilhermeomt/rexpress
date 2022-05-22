@@ -11,9 +11,6 @@ OpenProject::OpenProject(User *authUser, QWidget *parent) :
     ui->btnBox->button(QDialogButtonBox::Ok)->setText("Selecionar");
     ui->btnBox->button(QDialogButtonBox::Cancel)->setText("Cancelar");
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_projectsRepository = new ProjectsRepository(settings);
-
     auto vec = m_projectsRepository->getByUserId(m_authUser->getId());
 
     if(!vec) {

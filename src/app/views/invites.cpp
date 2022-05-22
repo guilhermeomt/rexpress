@@ -19,10 +19,6 @@ Invites::Invites(User* authUser, QVector<Invitation*>* invitations, QWidget *par
     ui->btnBox->button(QDialogButtonBox::Ok)->setText("Aceitar");
     ui->btnBox->button(QDialogButtonBox::Cancel)->setText("Recusar");
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_usersRepository = new UsersRepository(settings);
-
-    m_projectRepository = new ProjectsRepository(settings);
     if(m_invitations->empty()) {
         return;
     }
@@ -73,8 +69,6 @@ void Invites::on_btnBox_accepted()
 
     invitation->setStatus("accepted");
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_invitationsRepository = new InvitationsRepository(settings);
     bool ok = m_invitationsRepository->updateStatus(invitation->getId(), invitation->getStatus());
 
     if(ok) {
@@ -108,8 +102,6 @@ void Invites::on_btnBox_rejected()
 
     invitation->setStatus("rejected");
 
-    QSettings settings(":/settings/settings.ini", QSettings::IniFormat);
-    m_invitationsRepository = new InvitationsRepository(settings);
     bool ok = m_invitationsRepository->updateStatus(invitation->getId(), invitation->getStatus());
 
     if(!ok) {

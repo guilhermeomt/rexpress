@@ -29,6 +29,9 @@ private slots:
 
     void on_btnBox_rejected();
 
+    IOC_INJECTABLE(InvitationsRepository, m_invitationsRepository);
+    IOC_INJECTABLE(UsersRepository, m_usersRepository);
+    IOC_INJECTABLE(ProjectsRepository, m_projectRepository);
 signals:
     void accept(int removedInvitationIndex);
     void reject(int removedInvitationIndex);
