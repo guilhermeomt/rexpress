@@ -31,10 +31,16 @@ SOURCES += \
     database/dbmanager.cpp \
     database/repositories/invitationsrepository.cpp \
     database/repositories/projectsrepository.cpp \
+    database/repositories/requirementsrepository.cpp \
     database/repositories/usersrepository.cpp \
     main.cpp \
+    models/conversation.cpp \
     models/invitation.cpp \
+    models/message.cpp \
+    models/permission.cpp \
     models/project.cpp \
+    models/requirement.cpp \
+    models/role.cpp \
     models/user.cpp \
     views/about.cpp \
     views/invites.cpp \
@@ -50,9 +56,15 @@ HEADERS += \
     database/repositories/invitationsrepository.h \
     database/repositories/irepository.h \
     database/repositories/projectsrepository.h \
+    database/repositories/requirementsrepository.h \
     database/repositories/usersrepository.h \
+    models/conversation.h \
     models/invitation.h \
+    models/message.h \
+    models/permission.h \
     models/project.h \
+    models/requirement.h \
+    models/role.h \
     models/user.h \
     views/about.h \
     views/invites.h \

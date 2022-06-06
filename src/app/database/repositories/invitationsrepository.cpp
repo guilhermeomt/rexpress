@@ -1,7 +1,6 @@
 #include "invitationsrepository.h"
-#include "qsqlerror.h"
 
-InvitationsRepository::InvitationsRepository(DBManager* dbmanager, QObject* parent ) : QObject(parent), IRepository<Invitation,int>(dbmanager)
+InvitationsRepository::InvitationsRepository(DBManager* dbmanager, QObject* parent) : QObject(parent), IRepository<Invitation,int>(dbmanager)
 {
     m_dbmanager->open();
 };
@@ -96,8 +95,6 @@ Invitation* InvitationsRepository::update(Invitation entity) {
     query.bindValue(":id", entity.getId());
 
     auto ok = query.exec();
-
-    qDebug() << query.lastError();
 
     if(!ok) {
         return nullptr;

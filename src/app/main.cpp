@@ -1,10 +1,10 @@
-#include "mainwindow.h"
-#include "login.h"
+#include "views/mainwindow.h"
+#include "views/login.h"
 #include <QApplication>
 #include <QFile>
 
 #include "database/dbmanager.h"
-#include "../../dependency_injection/instantiationservice.h"
+#include "../dependency_injection/instantiationservice.h"
 
 int main(int argc, char *argv[])
 {
