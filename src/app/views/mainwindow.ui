@@ -14,7 +14,7 @@
    <string>Rexpress</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -23,25 +23,31 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>Exibir</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuRexpress">
+   <widget class="QMenu" name="menuRexpresss">
     <property name="title">
      <string>Rexpress</string>
     </property>
+    <addaction name="actionLogout"/>
+    <addaction name="actionQuit"/>
+    <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuSobre">
-    <property name="title">
-     <string>Sobre</string>
-    </property>
-   </widget>
-   <addaction name="menuRexpress"/>
-   <addaction name="menuView"/>
-   <addaction name="menuSobre"/>
+   <addaction name="menuRexpresss"/>
   </widget>
+  <action name="actionLogout">
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

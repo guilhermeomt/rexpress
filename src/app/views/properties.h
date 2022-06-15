@@ -4,19 +4,17 @@
 #include <QWidget>
 
 namespace Ui {
-class Form;
+class Properties;
 }
 
-class Form : public QWidget
+class Properties : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Form(QWidget *parent = nullptr);
-    ~Form();
-
-private:
-    Ui::Form *ui;
+    explicit Properties(QWidget *parent = nullptr);
+    ~Properties();
+    Ui::Properties *ui;
 };
 
 #endif // PROPERTIES_H

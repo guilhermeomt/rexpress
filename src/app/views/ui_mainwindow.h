@@ -25,8 +25,10 @@ public:
     QWidget *centralwidget;
     QMenuBar *menubar;
     QMenu *menuView;
+    QMenu *menuActions;
     QMenu *menuRexpress;
-    QMenu *menuSobre;
+    QMenu *menuHelp;
+
 
     void setupUi(QMainWindow *CMainWindow)
     {
@@ -41,15 +43,18 @@ public:
         menubar->setGeometry(QRect(0, 0, 1284, 25));
         menuView = new QMenu(menubar);
         menuView->setObjectName(QString::fromUtf8("menuView"));
+        menuActions = new QMenu(menubar);
+        menuActions->setObjectName(QString::fromUtf8("menuActions"));
         menuRexpress = new QMenu(menubar);
         menuRexpress->setObjectName(QString::fromUtf8("menuRexpress"));
-        menuSobre = new QMenu(menubar);
-        menuSobre->setObjectName(QString::fromUtf8("menuSobre"));
+        menuHelp = new QMenu(menubar);
+        menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         CMainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuRexpress->menuAction());
+        menubar->addAction(menuActions->menuAction());
         menubar->addAction(menuView->menuAction());
-        menubar->addAction(menuSobre->menuAction());
+        menubar->addAction(menuHelp->menuAction());
 
         retranslateUi(CMainWindow);
 
@@ -61,13 +66,14 @@ public:
         CMainWindow->setWindowTitle(QCoreApplication::translate("CMainWindow", "MainWindow", nullptr));
         menuView->setTitle(QCoreApplication::translate("CMainWindow", "Exibir", nullptr));
         menuRexpress->setTitle(QCoreApplication::translate("CMainWindow", "Rexpress", nullptr));
-        menuSobre->setTitle(QCoreApplication::translate("CMainWindow", "Sobre", nullptr));
+        menuActions->setTitle(QCoreApplication::translate("CMainWindow", "Ações", nullptr));
+        menuHelp->setTitle(QCoreApplication::translate("CMainWindow", "Ajuda", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class CMainWindow: public Ui_CMainWindow {};
+class CMainWindow: public Ui_CMainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

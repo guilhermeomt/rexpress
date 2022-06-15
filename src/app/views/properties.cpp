@@ -1,14 +1,14 @@
 #include "properties.h"
-#include "ui_form.h"
+#include "ui_properties.h"
 
-Form::Form(QWidget *parent) :
+Properties::Properties(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Form)
+    ui(new Ui::Properties)
 {
     ui->setupUi(this);
 }
 
-Form::~Form()
+Properties::~Properties()
 {
     delete ui;
 }

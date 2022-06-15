@@ -82,8 +82,6 @@ Invitation* InvitationsRepository::create(Invitation entity) {
 Invitation* InvitationsRepository::update(Invitation entity) {
     QSqlQuery query;
 
-    qDebug() << entity.getId() << entity.getInviterId() << entity.getInviteeId()
-             << entity.getProjectId() << entity.getStatus() << entity.getCreatedAt();
     query.prepare("UPDATE invitations SET inviter_id = :inviterId, invitee_id = :inviteeId"
                   " project_id = :projectId, status = :status, created_at = :createdAt"
                   " WHERE id = :id");

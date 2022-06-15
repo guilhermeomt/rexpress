@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Rexpress</Name>
+    <Version>1.0</Version>
+    <Title>Rexpress</Title>
+    <Publisher>CCUENF</Publisher>
+    <StartMenuDir>Rexpressr</StartMenuDir>
+    <TargetDir>@HomeDir@/Rexpress</TargetDir>
+</Installer>

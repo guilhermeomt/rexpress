@@ -8,7 +8,10 @@ About::About(QWidget *parent) :
     ui->setupUi(this);
 
     ui->lblLogo->setScaledContents(true);
-    ui->lblLogo->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    ui->lblLogo->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored);
+
+    ui->lblCourseLogo->setScaledContents(true);
+    ui->lblCourseLogo->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored);
 }
 
 About::~About()

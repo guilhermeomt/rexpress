@@ -1,4 +1,3 @@
-#include "views/mainwindow.h"
 #include "views/login.h"
 #include <QApplication>
 #include <QFile>
@@ -21,6 +20,7 @@ int main(int argc, char *argv[])
 
     iis->registerSingleton<UsersRepository>(new UsersRepository(dbmanager));
     iis->registerSingleton<ProjectsRepository>(new ProjectsRepository(dbmanager));
+    iis->registerSingleton<RequirementsRepository>(new RequirementsRepository(dbmanager));
     iis->registerSingleton<InvitationsRepository>(new InvitationsRepository(dbmanager));
 
     QString stylesheet = QLatin1String(stylesheet_file.readAll());
