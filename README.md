@@ -1,5 +1,5 @@
 <p align="center">
-<img src="src/images/logo.png">
+<img src="src/app/images/logo.png">
 </p>
 
 ## Sobre
@@ -26,9 +26,9 @@ Em breve...
     - [x] Aceitar/Recusar convite de projeto
     - [ ] Remover usuário do projeto
   - Requisitos
-    - [ ] Adicionar requisito
+    - [x] Adicionar requisito
     - [ ] Editar requisito
-    - [ ] Deletar requisito
+    - [x] Deletar requisito
   - Cargos
     - [ ] Criar cargo
     - [ ] Editar cargo
@@ -39,7 +39,7 @@ Em breve...
   - [x] Abrir projeto
   - [ ] Fechar projeto
   - [x] Menu Sobre
-  - [ ] Ver propriedades do requisito
+  - [x] Ver propriedades do requisito
 
 - Sistema de Configurações
   - [ ] Alterar tema
